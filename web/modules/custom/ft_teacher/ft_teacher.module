@@ -1,0 +1,45 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Url;
+use Drupal\user\Entity\Role;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_user_presave().
+ */
+function ft_teacher_user_presave(EntityInterface $entity) {
+  if ($entity->isNew() && !$entity->hasRole('teacher')) {
+    $admin = FALSE;
+
+    foreach ($entity->getRoles(TRUE) as $id) {
+      $role = Role::load($id);
+      if ($role->isAdmin()) {
+        $admin = TRUE;
+        break;
+      }
+    }
+
+    if (!$admin) {
+      $entity->addRole('teacher');
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_operation().
+ */
+function ft_teacher_entity_operation(EntityInterface $entity) {
+  if (!$entity instanceof UserInterface) {
+    return [];
+  }
+  if ($entity->isBlocked() && $entity->hasRole('teacher')) {
+    $operations = [];
+    $operations['approve'] = [
+      'title' => t('Approve'),
+      'url' => Url::fromRoute('ft_teacher.approve', ['user'  => $entity->id()]),
+      'weight' => 150,
+    ];
+    return $operations;
+  }
+}

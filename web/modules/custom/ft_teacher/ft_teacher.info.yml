@@ -1,0 +1,6 @@
+name: Teachers
+type: module
+description: 'Logic around the teachers.'
+package: Core
+version: VERSION
+core: 8.x

@@ -1,0 +1,5 @@
+ft_school.school_import_form:
+  title: 'Import Schools'
+  parent: system.admin
+  description: 'Import schools so they are up to date.'
+  route_name: ft_school.school_import_form

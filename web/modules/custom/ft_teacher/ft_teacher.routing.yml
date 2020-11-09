@@ -1,0 +1,10 @@
+ft_teacher.approve:
+  path: '/approve/{user}'
+  defaults:
+    _controller: '\Drupal\ft_teacher\Controller\TeacherController::approveTeacher'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      user:
+        type: entity:user

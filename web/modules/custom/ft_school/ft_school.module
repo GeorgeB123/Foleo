@@ -1,0 +1,23 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\user\Entity\User;
+
+function ft_school_form_alter(&$form, &$form_state, $form_id) {
+//  $result = \Drupal::entityQuery('group')
+//    ->condition('type', 'school')
+//    ->execute();
+//  entity_delete_multiple('group', $result);
+//  \Drupal::service('school_importer')->importCsv();
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function ft_school_entity_presave(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() == 'node' && $entity->bundle() == 'resource') {
+    $user = User::load(\Drupal::currentUser()->id());
+    $school_id = $user->field_school->target_id;
+    $entity->set('field_school', $school_id);
+  }
+}

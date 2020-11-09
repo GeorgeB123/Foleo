@@ -1,0 +1,5 @@
+services:
+  school_importer:
+    class: Drupal\ft_school\Services\SchoolImporter
+    arguments: ['@entity_type.manager']
+

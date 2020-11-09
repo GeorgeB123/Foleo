@@ -1,0 +1,7 @@
+ft_school.school_import_form:
+  path: '/admin/schools/import'
+  defaults:
+    _form: '\Drupal\ft_school\Form\SchoolImportForm'
+    _title: 'Import Schools'
+  requirements:
+    _permission: 'administer content'
